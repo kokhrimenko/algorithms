@@ -1,5 +1,15 @@
 package com.test.oracle;
 
+/**
+ * int a = 0; 
+ * int b = a++; // b = 0; a = 1
+ * 
+ * a = 0;
+ * b = ++a: // b = 1; a = 1
+ * 
+ * @author kostya
+ *
+ */
 public class LogicalOperators {
 
     public static void main(String[] args) {
