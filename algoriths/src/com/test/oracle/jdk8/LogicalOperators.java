@@ -1,4 +1,4 @@
-package com.test.oracle;
+package com.test.oracle.jdk8;
 
 /**
  * int a = 0; 
