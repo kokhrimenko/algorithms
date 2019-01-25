@@ -13,13 +13,13 @@ public class SemaphoreExample {
 
 		Semaphore semaphore = new Semaphore(2);
 
-		Runnable longRunningTask = () -> {
+		IntStream.range(0, 10).forEach(i -> executor.submit(() -> {
 			boolean permit = false;
 			try {
-				permit = semaphore.tryAcquire(1, TimeUnit.SECONDS);
+				permit = semaphore.tryAcquire(50, TimeUnit.MILLISECONDS);
 				if (permit) {
 					System.out.println("Semaphore acquired");
-					Thread.sleep(20);
+					Thread.sleep(200);
 				} else {
 					System.out.println("Could not acquire semaphore");
 				}
@@ -30,9 +30,7 @@ public class SemaphoreExample {
 					semaphore.release();
 				}
 			}
-		};
-
-		IntStream.range(0, 10).forEach(i -> executor.submit(longRunningTask));
+		}));
 
 		executor.shutdown();
 	}
