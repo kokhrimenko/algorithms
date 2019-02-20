@@ -6,13 +6,12 @@ import java.util.function.BiConsumer;
 import org.junit.Test;
 
 import com.study.kokhrimenko.algoriths.infrastructure.JUnitStory;
-import com.study.kokhrimenko.algoriths.infrastructure.ReflectionCreatedClass;
 
 public class TestRotateArray extends JUnitStory<TestRotateArray.CaseDataItem> {	
 	private static final String ARRAY_ITEM_DELIMITER = ",";
 
 	public TestRotateArray() {
-		super(RotateArray.class, new CaseDataItem());
+		super(RotateArray.class, params -> new CaseDataItem(params));
 	}
 	
 	@Test
@@ -53,50 +52,33 @@ public class TestRotateArray extends JUnitStory<TestRotateArray.CaseDataItem> {
 		}
 	}
 	
-	protected static final class CaseDataItem implements ReflectionCreatedClass<CaseDataItem>{
+	@Override
+	protected int getAllowedCountOfConstructorArguments() {
+		return 4;
+	}
+	
+	protected static final class CaseDataItem {
 		String comment;
 		int[] inputArray = null;
 		int[] expectedArray = null;
 		int k;
 
-		public CaseDataItem() {
-			super();
-		}
-		
-		private CaseDataItem(String comment, int[] inputArray, int[] expectedArray, int k) {
-			super();
-			this.comment = comment;
-			this.inputArray = inputArray;
-			this.expectedArray = expectedArray;
-			this.k = k;
-		}
-
-		@Override
-		public int getAllowedCountOfConstructorArguments() {
-			return 4;
-		}
-
-		@Override
-		public CaseDataItem instanciate(Object... params) {
-			String comment = params[0].toString();
+		public CaseDataItem(Object... params) {
+			this.comment = params[0].toString();
 			String inputArrayAsStr = params[1].toString();
-			int[] inputArray = null;
 			if (inputArrayAsStr != null && !inputArrayAsStr.trim().isEmpty()) {
-				inputArray = Arrays.stream(inputArrayAsStr.trim().split(ARRAY_ITEM_DELIMITER))
+				this.inputArray = Arrays.stream(inputArrayAsStr.trim().split(ARRAY_ITEM_DELIMITER))
 						.mapToInt(Integer::parseInt).toArray();
 			}
 			
 			String expectedArrayAsStr = params[2].toString();
-			int[] expectedArray = null;
 			if (expectedArrayAsStr != null && !expectedArrayAsStr.trim().isEmpty()) {
-				expectedArray = Arrays.stream(expectedArrayAsStr.trim().split(ARRAY_ITEM_DELIMITER))
+				this.expectedArray = Arrays.stream(expectedArrayAsStr.trim().split(ARRAY_ITEM_DELIMITER))
 						.mapToInt(Integer::parseInt).toArray();
 			}
 			
 			String kAsStr = params[3].toString();
-			int k = Integer.parseInt(kAsStr.trim());
-			
-			return new CaseDataItem(comment, inputArray, expectedArray, k);
+			this.k = Integer.parseInt(kAsStr.trim());
 		}
 	}
 }
