@@ -1,7 +1,6 @@
-package com.study.array.general.test;
+package com.study.array.general;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,14 +8,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-import com.study.array.general.RotateArray;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TestRotateArray {
 	private static final String FILE_NAME = RotateArray.class.getSimpleName() + ".txt";
 	private static final String ARRAY_ITEM_DELIMITER = ",";
 	private static final String ITEMS_DELIMITER = ";";
 
-	public static void main(String[] args) throws IOException {
+	private static final Logger logger = LoggerFactory.getLogger(TestRotateArray.class);
+	
+	@Test
+	public void testExecutionFromFileDS() throws Exception {
 		List<CaseDataItem> testedDataList = new ArrayList<>();		
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(TestRotateArray.class.getResourceAsStream(FILE_NAME)))) {
 			String line = "";
@@ -32,25 +36,25 @@ public class TestRotateArray {
 		if(testedDataList.isEmpty()) {
 			throw new IllegalArgumentException("File with test data doesn't contains any data!");
 		}
-		System.out.println("Start to execute RotateArray test cases at: " + new Date());
+		logger.debug("Start to execute RotateArray test cases at: {}", new Date());
 		for(CaseDataItem testCase : testedDataList) {
-			System.out.println("Execute test story: " + testCase.comment);
-			TestRotateArray.execute(testCase.inputArray, testCase.expectedArray, testCase.k);
+			logger.debug("Execute test story: {}", testCase.comment);
+			execute(testCase.inputArray, testCase.expectedArray, testCase.k);
 		}
-		System.out.println("End to execute RotateArray test cases at: " + new Date());
+		logger.debug("End to execute RotateArray test cases at: {}", new Date());
 	}
 
-	private static void execute(int[] inputArray, int[] expectedArray, int k) {
+	private void execute(int[] inputArray, int[] expectedArray, int k) {
 		RotateArray executor = new RotateArray();
 
-		TestRotateArray.execute((in, pos) -> executor.rotate(in, pos), createTestedArray(inputArray), expectedArray, k);
-		TestRotateArray.execute((in, pos) -> executor.rotateBuble(in, pos), createTestedArray(inputArray),
+		execute((in, pos) -> executor.rotate(in, pos), createTestedArray(inputArray), expectedArray, k);
+		execute((in, pos) -> executor.rotateBuble(in, pos), createTestedArray(inputArray),
 				expectedArray, k);
-		TestRotateArray.execute((in, pos) -> executor.rotateReversal(in, pos), createTestedArray(inputArray),
+		execute((in, pos) -> executor.rotateReversal(in, pos), createTestedArray(inputArray),
 				expectedArray, k);
 	}
 
-	private static int[] createTestedArray(int[] inputArray) {
+	private int[] createTestedArray(int[] inputArray) {
 		if (inputArray == null) {
 			return null;
 		}
@@ -60,7 +64,7 @@ public class TestRotateArray {
 		return testedArray;
 	}
 
-	private static void execute(BiConsumer<int[], Integer> executor, int[] inputArray, int[] expectedArray, int k) {
+	private void execute(BiConsumer<int[], Integer> executor, int[] inputArray, int[] expectedArray, int k) {
 		executor.accept(inputArray, k);
 
 		if (!Arrays.equals(inputArray, expectedArray)) {
@@ -68,7 +72,7 @@ public class TestRotateArray {
 		}
 	}
 	
-	private static final class CaseDataItem {
+	private final class CaseDataItem {
 		String comment;
 		int[] inputArray = null;
 		int[] expectedArray = null;
