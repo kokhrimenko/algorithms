@@ -1,3 +1,8 @@
+General Info:
+1 To run JUnit test use next command
+	mvn test
+
+Interface descrption:
 1 MergeSort
 https://www.geeksforgeeks.org/merge-sort/
 
