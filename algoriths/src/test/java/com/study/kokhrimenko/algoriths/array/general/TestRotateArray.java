@@ -59,6 +59,11 @@ public class TestRotateArray extends JUnitStory<TestRotateArray.CaseDataItem> {
 		return 4;
 	}
 	
+	@Override
+	protected FileType getInputDCType() {
+		return FileDataSourceReaderFactory.FileType.TXT;
+	}
+	
 	protected static final class CaseDataItem {
 		String comment;
 		int[] inputArray = null;
@@ -82,10 +87,5 @@ public class TestRotateArray extends JUnitStory<TestRotateArray.CaseDataItem> {
 			String kAsStr = params[2].toString();
 			this.k = Integer.parseInt(kAsStr.trim());
 		}
-	}
-
-	@Override
-	protected FileType getInputDCType() {
-		return FileDataSourceReaderFactory.FileType.TXT;
 	}
 }

@@ -1,0 +1,3 @@
+LongestSubstringWithoutRepeating TC1;abcabcbb;3
+LongestSubstringWithoutRepeating TC2;bbbbb;1
+LongestSubstringWithoutRepeating TC3;pwwkew;3

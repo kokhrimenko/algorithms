@@ -2,13 +2,7 @@ package com.study.kokhrimenko.algoriths.external.leetcode;
 
 public class TwoSums {
 
-	public static void main(String[] args) {
-		int[] arr = new int[] {3, 2, 4};
-		int[] res = twoSum(arr, 6);
-		System.out.println(res);
-	}
-	
-	public static int[] twoSum(int[] nums, int target) {
+	public int[] twoSum(int[] nums, int target) {
 		for (int i = 0; i < nums.length; i++) {
 			for (int j = i+1; j < nums.length; j++) {
 				if(nums[i] + nums[j] == target) {
