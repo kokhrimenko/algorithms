@@ -1,4 +1,4 @@
-package com.test.oracle.jdk8;
+package com.study.external.oracle.jdk8;
 
 import java.util.Arrays;
 

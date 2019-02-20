@@ -1,4 +1,4 @@
-package com.test.leetcode;
+package com.study.external.leetcode;
 
 public class Atoi {
 
