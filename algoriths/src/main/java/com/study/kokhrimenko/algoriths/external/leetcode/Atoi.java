@@ -2,12 +2,7 @@ package com.study.kokhrimenko.algoriths.external.leetcode;
 
 public class Atoi {
 
-	public static void main(String[] args) {
-		String inputStr = "9223372036854775808";
-		System.out.println(Atoi.myAtoi(inputStr));
-	}
-	
-	public static int myAtoi(String str) {
+	public int myAtoi(String str) {
 		if(str == null || str.isEmpty()) {
 			return 0;
 		}

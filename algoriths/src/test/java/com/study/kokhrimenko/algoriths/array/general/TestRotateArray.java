@@ -8,8 +8,6 @@ import org.junit.Test;
 import com.study.kokhrimenko.algoriths.infrastructure.JUnitStory;
 
 public class TestRotateArray extends JUnitStory<TestRotateArray.CaseDataItem> {	
-	private static final String ARRAY_ITEM_DELIMITER = ",";
-
 	public TestRotateArray() {
 		super(RotateArray.class, params -> new CaseDataItem(params));
 	}
@@ -65,20 +63,11 @@ public class TestRotateArray extends JUnitStory<TestRotateArray.CaseDataItem> {
 
 		public CaseDataItem(Object... params) {
 			this.comment = params[0].toString();
-			String inputArrayAsStr = params[1].toString();
-			if (inputArrayAsStr != null && !inputArrayAsStr.trim().isEmpty()) {
-				this.inputArray = Arrays.stream(inputArrayAsStr.trim().split(ARRAY_ITEM_DELIMITER))
-						.mapToInt(Integer::parseInt).toArray();
-			}
-			
-			String expectedArrayAsStr = params[2].toString();
-			if (expectedArrayAsStr != null && !expectedArrayAsStr.trim().isEmpty()) {
-				this.expectedArray = Arrays.stream(expectedArrayAsStr.trim().split(ARRAY_ITEM_DELIMITER))
-						.mapToInt(Integer::parseInt).toArray();
-			}
+			this.inputArray = generateIntArrayFromInputParams(params[1].toString());
+			this.expectedArray = generateIntArrayFromInputParams(params[2].toString());
 			
 			String kAsStr = params[3].toString();
 			this.k = Integer.parseInt(kAsStr.trim());
-		}
+		}		
 	}
 }

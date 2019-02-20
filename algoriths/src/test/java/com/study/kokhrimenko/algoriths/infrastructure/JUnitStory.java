@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
@@ -11,9 +12,11 @@ import java.util.function.Function;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JUnitStory<T> {
+public abstract class JUnitStory<T> {
+	protected static final String ARRAY_ITEM_DELIMITER = ",";
+	
 	private static final String DS_FILENAME_EXTENSION = "txt";
-	private static final String ITEMS_DELIMITER = ";";
+	private static final String ITEMS_DELIMITER = ";";	
 
 	private Class<?> testClass;
 	private final Logger logger;
@@ -55,7 +58,15 @@ public class JUnitStory<T> {
 		getLogger().debug("Start to execute {} test cases at: {}", testClass.getSimpleName(), new Date());
 	}
 
-	protected int getAllowedCountOfConstructorArguments() {
-		throw new RuntimeException("Please override me in supclasses");
+	protected abstract int getAllowedCountOfConstructorArguments();
+	
+	protected static int[] generateIntArrayFromInputParams(String inputParam) {
+		if (inputParam == null || inputParam.trim().isEmpty()) {
+			return null;
+		}
+		
+		return Arrays.stream(inputParam.trim().split(ARRAY_ITEM_DELIMITER))
+				.map(item -> item.trim())
+				.mapToInt(Integer::parseInt).toArray();
 	}
 }

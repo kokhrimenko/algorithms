@@ -1,0 +1,3 @@
+Test case with input string 'abcabcbb';abcabcbb;3
+Test case with input string 'bbbbb';bbbbb;1
+Test case with input string 'pwwkew';pwwkew;3
