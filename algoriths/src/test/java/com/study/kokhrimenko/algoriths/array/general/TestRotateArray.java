@@ -5,11 +5,15 @@ import java.util.function.BiConsumer;
 
 import org.junit.Test;
 
+import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory.FileType;
+import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory;
 import com.study.kokhrimenko.algoriths.infrastructure.JUnitStory;
 
 public class TestRotateArray extends JUnitStory<TestRotateArray.CaseDataItem> {	
+	private static final String ARRAY_ITEM_DELIMITER = ",";
+
 	public TestRotateArray() {
-		super(RotateArray.class, params -> new CaseDataItem(params));
+		super(RotateArray.class, (comment, params) -> new CaseDataItem(comment, params.toArray(new String[params.size()])));
 	}
 	
 	@Test
@@ -55,19 +59,33 @@ public class TestRotateArray extends JUnitStory<TestRotateArray.CaseDataItem> {
 		return 4;
 	}
 	
+	@Override
+	protected FileType getInputDCType() {
+		return FileDataSourceReaderFactory.FileType.TXT;
+	}
+	
 	protected static final class CaseDataItem {
 		String comment;
 		int[] inputArray = null;
 		int[] expectedArray = null;
 		int k;
 
-		public CaseDataItem(Object... params) {
-			this.comment = params[0].toString();
-			this.inputArray = generateIntArrayFromInputParams(params[1].toString());
-			this.expectedArray = generateIntArrayFromInputParams(params[2].toString());
+		public CaseDataItem(String comment, String... params) {
+			this.comment = comment;
+			String inputArrayAsStr = params[0].toString();
+			if (inputArrayAsStr != null && !inputArrayAsStr.trim().isEmpty()) {
+				this.inputArray = Arrays.stream(inputArrayAsStr.trim().split(ARRAY_ITEM_DELIMITER))
+						.mapToInt(Integer::parseInt).toArray();
+			}
 			
-			String kAsStr = params[3].toString();
+			String expectedArrayAsStr = params[1].toString();
+			if (expectedArrayAsStr != null && !expectedArrayAsStr.trim().isEmpty()) {
+				this.expectedArray = Arrays.stream(expectedArrayAsStr.trim().split(ARRAY_ITEM_DELIMITER))
+						.mapToInt(Integer::parseInt).toArray();
+			}
+			
+			String kAsStr = params[2].toString();
 			this.k = Integer.parseInt(kAsStr.trim());
-		}		
+		}
 	}
 }

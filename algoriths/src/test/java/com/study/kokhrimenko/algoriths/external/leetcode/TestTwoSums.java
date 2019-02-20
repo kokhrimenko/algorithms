@@ -5,12 +5,14 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
+import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory;
+import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory.FileType;
 import com.study.kokhrimenko.algoriths.infrastructure.JUnitStory;
 
 public class TestTwoSums extends JUnitStory<TestTwoSums.CaseDataItem>{
 
 	public TestTwoSums() {
-		super(TwoSums.class,  params -> new CaseDataItem(params));
+		super(TwoSums.class, (comment, params) -> new CaseDataItem(comment, params.toArray(new String[params.size()])));
 	}
 
 	@Test
@@ -33,17 +35,22 @@ public class TestTwoSums extends JUnitStory<TestTwoSums.CaseDataItem>{
 		}
 	}
 	
+	@Override
+	protected FileType getInputDCType() {
+		return FileDataSourceReaderFactory.FileType.TXT;
+	}
+	
 	protected static final class CaseDataItem {
 		String comment;
 		int[] inputArray;
 		int target;
 		int[] expectedArray;
 
-		public CaseDataItem(Object... params) {
-			this.comment = params[0].toString();
-			this.inputArray = generateIntArrayFromInputParams(params[1].toString());
-			this.target = Integer.parseInt(params[2].toString().trim());
-			this.expectedArray = generateIntArrayFromInputParams(params[3].toString());
+		public CaseDataItem(String comment, String... params) {
+			this.comment = comment;
+			this.inputArray = generateIntArrayFromInputParams(params[0]);
+			this.target = Integer.parseInt(params[1].trim());
+			this.expectedArray = generateIntArrayFromInputParams(params[2]);
 		}
 	}
 

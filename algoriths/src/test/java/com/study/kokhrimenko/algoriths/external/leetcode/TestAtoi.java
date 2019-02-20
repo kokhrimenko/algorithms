@@ -4,12 +4,14 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory;
+import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory.FileType;
 import com.study.kokhrimenko.algoriths.infrastructure.JUnitStory;
 
 public class TestAtoi extends JUnitStory<TestAtoi.CaseDataItem>{
 
 	public TestAtoi() {
-		super(Atoi.class,  params -> new CaseDataItem(params));
+		super(Atoi.class, (comment, params) -> new CaseDataItem(comment, params.toArray(new String[params.size()])));
 	}
 
 	@Test
@@ -28,15 +30,20 @@ public class TestAtoi extends JUnitStory<TestAtoi.CaseDataItem>{
 		assertEquals(inputItem.expectedResult, resultedValue);
 	}
 	
+	@Override
+	protected FileType getInputDCType() {
+		return FileDataSourceReaderFactory.FileType.TXT;
+	}
+	
 	protected static final class CaseDataItem {
 		String comment;
 		String inputNumber;
 		int expectedResult;
 
-		public CaseDataItem(Object... params) {
-			this.comment = params[0].toString();
-			this.inputNumber = params[1].toString();
-			this.expectedResult = Integer.parseInt(params[2].toString());
+		public CaseDataItem(String comment, String... params) {
+			this.comment = comment;
+			this.inputNumber = params[0];
+			this.expectedResult = Integer.parseInt(params[1]);
 		}
 	}
 

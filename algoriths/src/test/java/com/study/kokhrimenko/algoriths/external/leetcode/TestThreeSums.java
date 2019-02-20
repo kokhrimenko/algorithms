@@ -11,13 +11,15 @@ import java.util.stream.Collectors;
 
 import org.junit.Test;
 
+import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory;
 import com.study.kokhrimenko.algoriths.infrastructure.JUnitStory;
+import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory.FileType;
 
 public class TestThreeSums extends JUnitStory<TestThreeSums.CaseDataItem>{
 	private static final String PAIR_LIST_DELIMITER = "\\|";
 	
 	public TestThreeSums() {
-		super(ThreeSums.class,  params -> new CaseDataItem(params));
+		super(ThreeSums.class, (comment, params) -> new CaseDataItem(comment, params.toArray(new String[params.size()])));
 	}
 
 	@Test
@@ -40,17 +42,22 @@ public class TestThreeSums extends JUnitStory<TestThreeSums.CaseDataItem>{
 		}
 	}
 	
+	@Override
+	protected FileType getInputDCType() {
+		return FileDataSourceReaderFactory.FileType.TXT;
+	}
+	
 	protected static final class CaseDataItem {
 		String comment;
 		int[] inputArray;
 		List<List<Integer>> expectedResult;
 
-		public CaseDataItem(Object... params) {
-			this.comment = params[0].toString();
-			this.inputArray = generateIntArrayFromInputParams(params[1].toString());
-			if(params[2] != null) {
+		public CaseDataItem(String comment, String... params) {
+			this.comment = comment;
+			this.inputArray = generateIntArrayFromInputParams(params[0]);
+			if(params[1] != null) {
 				expectedResult = new ArrayList<>();
-				String[] resArrays = params[2].toString().trim().split(PAIR_LIST_DELIMITER);
+				String[] resArrays = params[1].trim().split(PAIR_LIST_DELIMITER);
 				for(int i=0; i<resArrays.length; i++) {
 					expectedResult.add(Arrays.stream(resArrays[i].trim().split(ARRAY_ITEM_DELIMITER))
 							.map(item -> Integer.parseInt(item.trim()))

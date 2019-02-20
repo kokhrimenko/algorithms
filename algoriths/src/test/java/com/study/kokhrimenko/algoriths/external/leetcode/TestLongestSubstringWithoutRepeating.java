@@ -4,12 +4,14 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory;
+import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory.FileType;
 import com.study.kokhrimenko.algoriths.infrastructure.JUnitStory;
 
 public class TestLongestSubstringWithoutRepeating extends JUnitStory<TestLongestSubstringWithoutRepeating.CaseDataItem>{
 
 	public TestLongestSubstringWithoutRepeating() {
-		super(LongestSubstringWithoutRepeating.class,  params -> new CaseDataItem(params));
+		super(LongestSubstringWithoutRepeating.class, (comment, params) -> new CaseDataItem(comment, params.toArray(new String[params.size()])));
 	}
 
 	@Test
@@ -28,15 +30,20 @@ public class TestLongestSubstringWithoutRepeating extends JUnitStory<TestLongest
 		assertEquals(inputItem.expectedPos, resultedPos);
 	}
 	
+	@Override
+	protected FileType getInputDCType() {
+		return FileDataSourceReaderFactory.FileType.TXT;
+	}
+	
 	protected static final class CaseDataItem {
 		String comment;
 		String inputString;
 		int expectedPos;
 
-		public CaseDataItem(Object... params) {
-			this.comment = params[0].toString();
-			this.inputString = params[1].toString();
-			this.expectedPos = Integer.parseInt(params[2].toString());
+		public CaseDataItem(String comment, String... params) {
+			this.comment = comment;
+			this.inputString = params[0];
+			this.expectedPos = Integer.parseInt(params[1]);
 		}
 	}
 

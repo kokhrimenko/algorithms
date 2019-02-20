@@ -5,12 +5,14 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.study.kokhrimenko.algoriths.external.leetcode.AddTwoNumbers.ListNode;
+import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory;
 import com.study.kokhrimenko.algoriths.infrastructure.JUnitStory;
+import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory.FileType;
 
 public class TestAddTwoNumbers extends JUnitStory<TestAddTwoNumbers.CaseDataItem> {
 
 	public TestAddTwoNumbers() {
-		super(AddTwoNumbers.class, params -> new CaseDataItem(params));
+		super(AddTwoNumbers.class, (comment, params) -> new CaseDataItem(comment, params.toArray(new String[params.size()])));
 	}
 
 	@Test
@@ -40,12 +42,12 @@ public class TestAddTwoNumbers extends JUnitStory<TestAddTwoNumbers.CaseDataItem
 		ListNode secondNumberNode;
 		ListNode resultedNode;
 
-		public CaseDataItem(Object... params) {
-			this.comment = params[0].toString();			
+		public CaseDataItem(String comment, String... params) {
+			this.comment = comment;			
 
-			this.firstNumberNode = CaseDataItem.generateListNodeFromArrayValue(generateIntArrayFromInputParams(params[1].toString()));
-			this.secondNumberNode = CaseDataItem.generateListNodeFromArrayValue(generateIntArrayFromInputParams(params[2].toString()));
-			this.resultedNode = CaseDataItem.generateListNodeFromArrayValue(generateIntArrayFromInputParams(params[3].toString()));			
+			this.firstNumberNode = CaseDataItem.generateListNodeFromArrayValue(generateIntArrayFromInputParams(params[0]));
+			this.secondNumberNode = CaseDataItem.generateListNodeFromArrayValue(generateIntArrayFromInputParams(params[1]));
+			this.resultedNode = CaseDataItem.generateListNodeFromArrayValue(generateIntArrayFromInputParams(params[2]));			
 		}
 		
 		private static ListNode generateListNodeFromArrayValue(int[] values) {
@@ -67,5 +69,10 @@ public class TestAddTwoNumbers extends JUnitStory<TestAddTwoNumbers.CaseDataItem
 			
 			return resultedNode;
 		}
-	}	
-}	
+	}
+	
+	@Override
+	protected FileType getInputDCType() {
+		return FileDataSourceReaderFactory.FileType.TXT;
+	}
+}
