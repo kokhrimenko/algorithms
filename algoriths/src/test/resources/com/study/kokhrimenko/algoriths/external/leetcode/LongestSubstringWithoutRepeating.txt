@@ -1,3 +1,3 @@
-Test case with input string 'abcabcbb';abcabcbb;3
-Test case with input string 'bbbbb';bbbbb;1
-Test case with input string 'pwwkew';pwwkew;3
+LongestSubstringWithoutRepeating TC1;abcabcbb;3
+LongestSubstringWithoutRepeating TC2;bbbbb;1
+LongestSubstringWithoutRepeating TC3;pwwkew;3

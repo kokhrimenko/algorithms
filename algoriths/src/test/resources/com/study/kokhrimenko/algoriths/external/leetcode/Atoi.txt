@@ -1,6 +1,6 @@
-Convert string to number '42';42;42
-Convert string to number '   -42';   -42;-42
-Convert string to number '4193 with words';4193 with words;4193
-Convert string to number 'words and 987';words and 987;0
-Convert string to number '9223372036854775808';9223372036854775808;2147483647
-Convert string to number '-9223372036854775808';-9223372036854775808;-2147483648
+Atoi TC1;42;42
+Atoi TC2;   -42;-42
+Atoi TC3;4193 with words;4193
+Atoi TC4;words and 987;0
+Atoi TC5;9223372036854775808;2147483647
+Atoi TC6;-9223372036854775808;-2147483648
