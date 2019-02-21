@@ -29,6 +29,9 @@ public class FileDataSourceReaderTXT implements FileDataSourceReader{
 					throw new IllegalArgumentException("File with test data contains some wrong data: " + line);
 				}
 
+				items = Arrays.stream(items)
+								.map(item -> item != null ? item.trim() : item)
+								.toArray(size -> new String[size]);
 				resuledDS.add(new DataSourceItem(items[0], Arrays.asList(Arrays.copyOfRange(items, 1, items.length))));
 			}
 		} catch (IOException e) {

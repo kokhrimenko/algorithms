@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory;
 import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory.FileType;
 import com.study.kokhrimenko.algoriths.infrastructure.JUnitStory;
+import com.study.kokhrimenko.algoriths.infrastructure.TestCaseItemData;
 
 public class TestAtoi extends JUnitStory<TestAtoi.CaseDataItem>{
 
@@ -24,10 +25,11 @@ public class TestAtoi extends JUnitStory<TestAtoi.CaseDataItem>{
 		markTestEnd();
 	}
 	
-	private void execute(CaseDataItem inputItem) {
+	@Override
+	protected void execute(CaseDataItem tcData) {
 		Atoi executor = new Atoi();
-		int resultedValue = executor.myAtoi(inputItem.inputNumber);
-		assertEquals(inputItem.expectedResult, resultedValue);
+		int resultedValue = executor.myAtoi(tcData.inputNumber);
+		assertEquals(tcData.expectedNumber, resultedValue);
 	}
 	
 	@Override
@@ -35,15 +37,19 @@ public class TestAtoi extends JUnitStory<TestAtoi.CaseDataItem>{
 		return FileDataSourceReaderFactory.FileType.TXT;
 	}
 	
-	protected static final class CaseDataItem {
-		String comment;
-		String inputNumber;
-		int expectedResult;
+	protected static final class CaseDataItem implements TestCaseItemData {
+		final String comment;
+		final String inputNumber;
+		final int expectedNumber;
 
 		public CaseDataItem(String comment, String... params) {
 			this.comment = comment;
 			this.inputNumber = params[0];
-			this.expectedResult = Integer.parseInt(params[1]);
+			this.expectedNumber = Integer.parseInt(params[1]);
+		}
+
+		public String getComment() {
+			return comment;
 		}
 	}
 

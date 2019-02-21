@@ -7,12 +7,13 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReader.DataSourceItem;
 
-public abstract class JUnitStory<T> {
+public abstract class JUnitStory<T extends TestCaseItemData> {
 	protected static final String ARRAY_ITEM_DELIMITER = ",";
 	
 	private static final String DS_FILENAME_EXTENSION = "txt";
@@ -39,6 +40,16 @@ public abstract class JUnitStory<T> {
 		}
 	}
 
+	@Test
+	public void testExecutionFromFileDS() throws Exception {
+		markTestStart();
+		for(T testCase : testedDataSet) {
+			getLogger().debug("Execute test story: {}", testCase.getComment());
+			execute(testCase);
+		}
+		markTestEnd();
+	}
+	
 	protected Logger getLogger() {
 		return logger;
 	}
@@ -54,14 +65,16 @@ public abstract class JUnitStory<T> {
 	protected abstract int getAllowedCountOfConstructorArguments();
 	
 	protected static int[] generateIntArrayFromInputParams(String inputParam) {
-		if (inputParam == null || inputParam.trim().isEmpty()) {
+		if (inputParam == null || inputParam.isEmpty()) {
 			return null;
 		}
 		
-		return Arrays.stream(inputParam.trim().split(ARRAY_ITEM_DELIMITER))
+		return Arrays.stream(inputParam.split(ARRAY_ITEM_DELIMITER))
 				.map(item -> item.trim())
 				.mapToInt(Integer::parseInt).toArray();
 	}
 	
 	protected abstract FileDataSourceReaderFactory.FileType getInputDCType();
+	
+	protected abstract void execute(T tcData);
 }

@@ -2,11 +2,10 @@ package com.study.kokhrimenko.algoriths.external.leetcode;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
-
 import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory;
 import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory.FileType;
 import com.study.kokhrimenko.algoriths.infrastructure.JUnitStory;
+import com.study.kokhrimenko.algoriths.infrastructure.TestCaseItemData;
 
 public class TestLongestSubstringWithoutRepeating extends JUnitStory<TestLongestSubstringWithoutRepeating.CaseDataItem>{
 
@@ -14,20 +13,11 @@ public class TestLongestSubstringWithoutRepeating extends JUnitStory<TestLongest
 		super(LongestSubstringWithoutRepeating.class, (comment, params) -> new CaseDataItem(comment, params.toArray(new String[params.size()])));
 	}
 
-	@Test
-	public void testExecutionFromFileDS() throws Exception {
-		markTestStart();
-		for(CaseDataItem testCase : testedDataSet) {
-			getLogger().debug("Execute test story: {}", testCase.comment);
-			execute(testCase);
-		}
-		markTestEnd();
-	}
-	
-	private void execute(CaseDataItem inputItem) {
+	@Override
+	protected void execute(CaseDataItem tcData) {
 		LongestSubstringWithoutRepeating executor = new LongestSubstringWithoutRepeating();
-		int resultedPos = executor.lengthOfLongestSubstring(inputItem.inputString);
-		assertEquals(inputItem.expectedPos, resultedPos);
+		int resultedPos = executor.lengthOfLongestSubstring(tcData.inputString);
+		assertEquals(tcData.expectedPos, resultedPos);
 	}
 	
 	@Override
@@ -35,15 +25,19 @@ public class TestLongestSubstringWithoutRepeating extends JUnitStory<TestLongest
 		return FileDataSourceReaderFactory.FileType.TXT;
 	}
 	
-	protected static final class CaseDataItem {
-		String comment;
-		String inputString;
-		int expectedPos;
+	protected static final class CaseDataItem implements TestCaseItemData {
+		final String comment;
+		final String inputString;
+		final int expectedPos;
 
 		public CaseDataItem(String comment, String... params) {
 			this.comment = comment;
 			this.inputString = params[0];
 			this.expectedPos = Integer.parseInt(params[1]);
+		}
+
+		public String getComment() {
+			return comment;
 		}
 	}
 

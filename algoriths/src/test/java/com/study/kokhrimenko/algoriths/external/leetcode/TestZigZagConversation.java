@@ -2,11 +2,10 @@ package com.study.kokhrimenko.algoriths.external.leetcode;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
-
 import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory;
 import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory.FileType;
 import com.study.kokhrimenko.algoriths.infrastructure.JUnitStory;
+import com.study.kokhrimenko.algoriths.infrastructure.TestCaseItemData;
 
 public class TestZigZagConversation extends JUnitStory<TestZigZagConversation.CaseDataItem> {
 
@@ -14,20 +13,11 @@ public class TestZigZagConversation extends JUnitStory<TestZigZagConversation.Ca
 		super(ZigZagConversion.class, (comment, params) -> new CaseDataItem(comment, params.toArray(new String[params.size()])));
 	}
 
-	@Test
-	public void testExecutionFromFileDS() throws Exception {
-		markTestStart();
-		for(CaseDataItem testCase : testedDataSet) {
-			getLogger().debug("Execute test story: {}", testCase.comment);
-			execute(testCase);
-		}
-		markTestEnd();
-	}
-	
-	private void execute(CaseDataItem testCaseData) {
+	@Override
+	protected void execute(CaseDataItem tcData) {
 		ZigZagConversion executor = new ZigZagConversion();
-		String resultedString = executor.convert(testCaseData.inputString, testCaseData.rowNumber);
-		assertEquals(testCaseData.expectedString, resultedString);
+		String resultedString = executor.convert(tcData.inputString, tcData.rowNumber);
+		assertEquals(tcData.expectedString, resultedString);
 	}
 	
 	@Override
@@ -35,19 +25,25 @@ public class TestZigZagConversation extends JUnitStory<TestZigZagConversation.Ca
 		return 4;
 	}
 	
-	protected static final class CaseDataItem {
-		String comment;
-		String inputString;
-		int rowNumber;
-		String expectedString;
+	protected static final class CaseDataItem implements TestCaseItemData {
+		final String comment;
+		final String inputString;
+		final int rowNumber;
+		final String expectedString;
 
 		public CaseDataItem(String comment, String... params) {
 			this.comment = comment;			
 
-			this.inputString = params[0].trim();
+			this.inputString = params[0];
 			this.rowNumber = Integer.parseInt(params[1]);
-			this.expectedString = params[2].trim();			
+			this.expectedString = params[2];			
 		}
+
+		public String getComment() {
+			return comment;
+		}
+		
+		
 	}
 	
 	@Override

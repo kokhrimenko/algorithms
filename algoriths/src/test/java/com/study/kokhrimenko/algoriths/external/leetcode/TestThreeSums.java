@@ -9,11 +9,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
-
 import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory;
-import com.study.kokhrimenko.algoriths.infrastructure.JUnitStory;
 import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory.FileType;
+import com.study.kokhrimenko.algoriths.infrastructure.JUnitStory;
+import com.study.kokhrimenko.algoriths.infrastructure.TestCaseItemData;
 
 public class TestThreeSums extends JUnitStory<TestThreeSums.CaseDataItem>{
 	private static final String PAIR_LIST_DELIMITER = "\\|";
@@ -22,22 +21,13 @@ public class TestThreeSums extends JUnitStory<TestThreeSums.CaseDataItem>{
 		super(ThreeSums.class, (comment, params) -> new CaseDataItem(comment, params.toArray(new String[params.size()])));
 	}
 
-	@Test
-	public void testExecutionFromFileDS() throws Exception {
-		markTestStart();
-		for(CaseDataItem testCase : testedDataSet) {
-			getLogger().debug("Execute test story: {}", testCase.comment);
-			execute(testCase);
-		}
-		markTestEnd();
-	}
-	
-	private void execute(CaseDataItem inputItem) {
+	@Override
+	protected void execute(CaseDataItem tcData) {
 		ThreeSums executor = new ThreeSums();
-		List<List<Integer>> resultedList = executor.threeSum(inputItem.inputArray);
+		List<List<Integer>> resultedList = executor.threeSum(tcData.inputArray);
 		assertNotNull(resultedList);
-		assertEquals(inputItem.expectedResult.size(), resultedList.size());
-		for(List<Integer> item: inputItem.expectedResult) {
+		assertEquals(tcData.expectedResult.size(), resultedList.size());
+		for(List<Integer> item: tcData.expectedResult) {
 			assertTrue(resultedList.contains(item));
 		}
 	}
@@ -47,23 +37,29 @@ public class TestThreeSums extends JUnitStory<TestThreeSums.CaseDataItem>{
 		return FileDataSourceReaderFactory.FileType.TXT;
 	}
 	
-	protected static final class CaseDataItem {
-		String comment;
-		int[] inputArray;
-		List<List<Integer>> expectedResult;
+	protected static final class CaseDataItem implements TestCaseItemData {
+		final String comment;
+		final int[] inputArray;
+		final List<List<Integer>> expectedResult;
 
 		public CaseDataItem(String comment, String... params) {
 			this.comment = comment;
 			this.inputArray = generateIntArrayFromInputParams(params[0]);
 			if(params[1] != null) {
 				expectedResult = new ArrayList<>();
-				String[] resArrays = params[1].trim().split(PAIR_LIST_DELIMITER);
+				String[] resArrays = params[1].split(PAIR_LIST_DELIMITER);
 				for(int i=0; i<resArrays.length; i++) {
-					expectedResult.add(Arrays.stream(resArrays[i].trim().split(ARRAY_ITEM_DELIMITER))
+					expectedResult.add(Arrays.stream(resArrays[i].split(ARRAY_ITEM_DELIMITER))
 							.map(item -> Integer.parseInt(item.trim()))
 							.collect(Collectors.toList()));
 				}
-			};
+			} else {
+				expectedResult = null;
+			}
+		}
+
+		public String getComment() {
+			return comment;
 		}
 	}
 

@@ -2,11 +2,10 @@ package com.study.kokhrimenko.algoriths.external.leetcode;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
-
 import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory;
 import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory.FileType;
 import com.study.kokhrimenko.algoriths.infrastructure.JUnitStory;
+import com.study.kokhrimenko.algoriths.infrastructure.TestCaseItemData;
 
 public class TestLongestPalindromeInString extends JUnitStory<TestLongestPalindromeInString.CaseDataItem> {
 
@@ -14,20 +13,11 @@ public class TestLongestPalindromeInString extends JUnitStory<TestLongestPalindr
 		super(LongestPalindromeInString.class, (comment, params) -> new CaseDataItem(comment, params.toArray(new String[params.size()])));
 	}
 
-	@Test
-	public void testExecutionFromFileDS() throws Exception {
-		markTestStart();
-		for(CaseDataItem testCase : testedDataSet) {
-			getLogger().debug("Execute test story: {}", testCase.comment);
-			execute(testCase);
-		}
-		markTestEnd();
-	}
-	
-	private void execute(CaseDataItem testCaseData) {
+	@Override
+	protected void execute(CaseDataItem tcData) {
 		LongestPalindromeInString executor = new LongestPalindromeInString();
-		String resultedString = executor.longestPalindrome(testCaseData.inputString);
-		assertEquals(testCaseData.expectedString, resultedString);
+		String resultedString = executor.longestPalindrome(tcData.inputString);
+		assertEquals(tcData.expectedString, resultedString);
 	}
 	
 	@Override
@@ -35,17 +25,21 @@ public class TestLongestPalindromeInString extends JUnitStory<TestLongestPalindr
 		return 3;
 	}
 	
-	protected static final class CaseDataItem {
-		String comment;
-		String inputString;
-		String expectedString;
+	protected static final class CaseDataItem implements TestCaseItemData {
+		final String comment;
+		final String inputString;
+		final String expectedString;
 
 		public CaseDataItem(String comment, String... params) {
 			this.comment = comment;			
 
-			this.inputString = params[0].trim();
-			this.expectedString = params[1].trim();			
+			this.inputString = params[0];
+			this.expectedString = params[1];			
 		}
+
+		public String getComment() {
+			return comment;
+		}		
 	}
 	
 	@Override
