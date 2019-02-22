@@ -85,8 +85,7 @@ public class TestRotateArray extends JUnitStory<TestRotateArray.CaseDataItem> {
 
 		@Override
 		public String getComment() {
-			// TODO Auto-generated method stub
-			return null;
+			return comment;
 		}
 	}
 }

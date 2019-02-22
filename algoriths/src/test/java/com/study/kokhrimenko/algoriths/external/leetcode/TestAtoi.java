@@ -2,8 +2,6 @@ package com.study.kokhrimenko.algoriths.external.leetcode;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
-
 import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory;
 import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReaderFactory.FileType;
 import com.study.kokhrimenko.algoriths.infrastructure.JUnitStory;
@@ -15,16 +13,6 @@ public class TestAtoi extends JUnitStory<TestAtoi.CaseDataItem>{
 		super(Atoi.class, (comment, params) -> new CaseDataItem(comment, params.toArray(new String[params.size()])));
 	}
 
-	@Test
-	public void testExecutionFromFileDS() throws Exception {
-		markTestStart();
-		for(CaseDataItem testCase : testedDataSet) {
-			getLogger().debug("Execute test story: {}", testCase.comment);
-			execute(testCase);
-		}
-		markTestEnd();
-	}
-	
 	@Override
 	protected void execute(CaseDataItem tcData) {
 		Atoi executor = new Atoi();

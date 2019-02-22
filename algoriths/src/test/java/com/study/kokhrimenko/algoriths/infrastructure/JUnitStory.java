@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.study.kokhrimenko.algoriths.infrastructure.FileDataSourceReader.DataSourceItem;
+import com.study.kokhrimenko.algoriths.infrastructure.model.ResourceConsumption;
 
 public abstract class JUnitStory<T extends TestCaseItemData> {
 	protected static final String ARRAY_ITEM_DELIMITER = ",";
@@ -43,11 +44,14 @@ public abstract class JUnitStory<T extends TestCaseItemData> {
 	@Test
 	public void testExecutionFromFileDS() throws Exception {
 		markTestStart();
+		long startTime = System.currentTimeMillis();
+		Runtime runtime = Runtime.getRuntime();
 		for(T testCase : testedDataSet) {
 			getLogger().debug("Execute test story: {}", testCase.getComment());
 			execute(testCase);
 		}
-		markTestEnd();
+        long elapsedTime = System.currentTimeMillis() - startTime;
+		markTestEnd(new ResourceConsumption(elapsedTime, runtime.totalMemory(), runtime.freeMemory()));
 	}
 	
 	protected Logger getLogger() {
@@ -55,11 +59,16 @@ public abstract class JUnitStory<T extends TestCaseItemData> {
 	}
 
 	protected void markTestEnd() {
+		markTestEnd(null);
+	}
+	
+	protected void markTestEnd(ResourceConsumption resourceInfo) {
+		getLogger().debug("TestCase execution metadata: {}", resourceInfo);
 		getLogger().debug("End to execute {} test cases at: {}", testClass.getSimpleName(), new Date());
 	}
 
 	protected void markTestStart() {
-		getLogger().debug("Start to execute {} test cases at: {}", testClass.getSimpleName(), new Date());
+		getLogger().debug("\n\nStart to execute {} test cases at: {}", testClass.getSimpleName(), new Date());
 	}
 
 	protected abstract int getAllowedCountOfConstructorArguments();
