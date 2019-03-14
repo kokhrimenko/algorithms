@@ -1,4 +1,4 @@
-package com.study.kokhrimenko.algoriths.external.leetcode.retursion;
+package com.study.kokhrimenko.algoriths.external.leetcode.recursion;
 
 /**
  * Given a linked list, swap every two adjacent nodes and return its head.

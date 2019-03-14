@@ -1,4 +1,4 @@
-package com.study.kokhrimenko.algoriths.external.leetcode.retursion;
+package com.study.kokhrimenko.algoriths.external.leetcode.recursion;
 
 /**
  * Reverse a singly linked list.

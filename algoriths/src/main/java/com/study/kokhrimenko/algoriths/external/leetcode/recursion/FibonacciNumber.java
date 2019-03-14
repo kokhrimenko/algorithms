@@ -1,4 +1,4 @@
-package com.study.kokhrimenko.algoriths.external.leetcode.retursion;
+package com.study.kokhrimenko.algoriths.external.leetcode.recursion;
 
 /**
  * The Fibonacci numbers, commonly denoted F(n) form a sequence, called the

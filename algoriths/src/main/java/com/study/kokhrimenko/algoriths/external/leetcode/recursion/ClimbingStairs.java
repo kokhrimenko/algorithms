@@ -1,4 +1,4 @@
-package com.study.kokhrimenko.algoriths.external.leetcode.retursion;
+package com.study.kokhrimenko.algoriths.external.leetcode.recursion;
 
 /**
  * You are climbing a stair case. It takes n steps to reach to the top.
