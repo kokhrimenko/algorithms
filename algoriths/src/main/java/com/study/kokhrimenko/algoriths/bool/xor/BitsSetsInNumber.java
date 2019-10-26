@@ -1,4 +1,4 @@
-package com.study.kokhrimenko.algoriths.bit;
+package com.study.kokhrimenko.algoriths.bool.xor;
 
 /**
  * Count the set number of bits given a number.

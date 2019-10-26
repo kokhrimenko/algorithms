@@ -1,4 +1,4 @@
-package com.study.kokhrimenko.algoriths.bit;
+package com.study.kokhrimenko.algoriths.bool.xor;
 
 /**
  * Using the values 5 and 6 as examples, let's add them together using bitwise
