@@ -1,5 +1,7 @@
 package com.study.kokhrimenko.algoriths.tree.is_bst;
 
+import java.util.function.IntBinaryOperator;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,34 +18,35 @@ public class TreeNode {
         data = item;
         left = right = null;
     }
-    
-    public static int getMinFromLeft(TreeNode root) {
+
+    public static int getMin(TreeNode root) {
         if (root == null) {
             return Integer.MAX_VALUE;
         }
-        return getMinFromLeft(root, root.getData());
+
+        return getValueFromLeafs(root, root.getData(), (arg1, arg2) -> arg1 < arg2 ? arg1 : arg2);
     }
 
-    private static int getMinFromLeft(TreeNode root, int currentMin) {
-        if (root == null) {
-            return currentMin;
+    private static int getValueFromLeafs(TreeNode node, int currentValue, IntBinaryOperator compare) {
+        if (node == null) {
+            return currentValue;
         }
-        int min = currentMin > root.getData() ? root.getData() : currentMin;
-        return getMinFromLeft(root.getRight(), min);
+        if (node.getRight() != null) {
+            int min = getValueFromLeafs(node.getRight(), node.getRight().getData(), compare);
+            currentValue = compare.applyAsInt(currentValue, min);
+        }
+
+        if (node.getLeft() != null) {
+            int min = getValueFromLeafs(node.getLeft(), node.getLeft().getData(), compare);
+            currentValue = compare.applyAsInt(currentValue, min);
+        }
+        return currentValue;
     }
-    
-    public static int getMaxFromRight(TreeNode root) {
+
+    public static int getMax(TreeNode root) {
         if (root == null) {
             return Integer.MIN_VALUE;
         }
-        return getMaxFromRight(root, root.getData());
-    }
-
-    private static int getMaxFromRight(TreeNode root, int currentMax) {
-        if (root == null) {
-            return currentMax;
-        }
-        int max = currentMax < root.getData() ? root.getData() : currentMax;
-        return getMaxFromRight(root.getRight(), max);
+        return getValueFromLeafs(root, root.getData(), (arg1, arg2) -> arg1 > arg2 ? arg1 : arg2);
     }
 }
