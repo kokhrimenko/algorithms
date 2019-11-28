@@ -7,7 +7,7 @@ package com.study.kokhrimenko.algoriths.array.search;
  * narrow the interval to the lower half. Otherwise narrow it to the upper half.
  * Repeatedly check until the value is found or the interval is empty.
  * 
- * Time complexity to O(Log n).
+ * Time complexity to O*(Log n).
  * 
  * @author kostic
  *
