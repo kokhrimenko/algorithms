@@ -41,23 +41,23 @@ public class Percolation {
             open(row - 1, col, linearPos);
         }
         // might be connect to a left element?
-        if(col + 1 <= dataSize) {
+        if (col + 1 <= dataSize) {
             open(row, col + 1, linearPos);
         }
         // might be connect to a lower element?
-        if(row + 1 <= dataSize) {
+        if (row + 1 <= dataSize) {
             open(row + 1, col, linearPos);
         }
         // might be connect to a lower element?
-        if(col - 1 > 0) {
+        if (col - 1 > 0) {
             open(row, col - 1, linearPos);
         }
         // might be connect to the dummy ROOT element?
-        if(row == 1) {
+        if (row == 1) {
             quickUnionEngine.union(linearPos, topRoot);
         }
         // might be connect to the dummy TARGET element?
-        if(row == dataSize) {
+        if (row == dataSize) {
             quickUnionEngine.union(bottomFinish, linearPos);
         }
         openedCellCount++;
@@ -72,7 +72,7 @@ public class Percolation {
     private int matrixToLinearCoord(int row, int col) {
         return (row - 1) * dataSize + col;
     }
-    
+
     private void validateMatrixCoordinate(int coordinale) {
         if (coordinale <= 0 || coordinale > dataSize) {
             throw new IllegalArgumentException(String.format("Input coordinate: %d exceed allowed range between %d and %d", coordinale, 1, dataSize));

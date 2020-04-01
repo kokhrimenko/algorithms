@@ -28,9 +28,9 @@ public class PercolationStats {
                 int row = StdRandom.uniform(1, n + 1);
                 int col = StdRandom.uniform(1, n + 1);
                 // if not already opened - then increment and open
-                if(!percolation.isOpen(row, col)) {
+                if (!percolation.isOpen(row, col)) {
                     percolation.open(row, col);
-                    iteration ++;
+                    iteration++;
                 }
             }
             results[i] = (double) iteration / matrixSize;
