@@ -6,7 +6,7 @@ public class Percolation {
 
     private static final int TOP_BOTTOM_NODES = 2;
 
-    private final int[][] data;
+    private final boolean[][] data;
     private final int dataSize;    
     private final WeightedQuickUnionUF quickUnionEngine;
     private final int topRoot;
@@ -19,7 +19,7 @@ public class Percolation {
             throw new IllegalArgumentException("Matrix Dimension should be positive integer!");
         }
 
-        data = new int[n][n];
+        data = new boolean[n][n];
         dataSize = n;
         quickUnionEngine = new WeightedQuickUnionUF(dataSize * dataSize + TOP_BOTTOM_NODES);
         topRoot = 0;
@@ -33,7 +33,7 @@ public class Percolation {
         if (isOpen(row, col)) {
             return;
         }
-        data[row - 1][col - 1] = 1;
+        data[row - 1][col - 1] = true;
 
         int linearPos = matrixToLinearCoord(row, col);
         // might be connect to an upper element?
@@ -84,7 +84,7 @@ public class Percolation {
         validateMatrixCoordinate(row);
         validateMatrixCoordinate(col);
 
-        return data[row - 1][col - 1] == 1;
+        return data[row - 1][col - 1];
     }
 
     // is the site (row, col) full?
